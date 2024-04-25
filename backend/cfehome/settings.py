@@ -15,14 +15,10 @@ from dotenv import load_dotenv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv()
-# TODO: move the credentials file in production
-file = f"{BASE_DIR}/app-compat-test.json"
-GCP_CREDENTIALS = os.getenv('GCP_CREDENTIALS_FILE')
-print("GCP CREDENTIALS",GCP_CREDENTIALS)
-GCP_CREDENTIALS_FILE = file if file else GCP_CREDENTIALS
+GCP_CREDENTIALS_FILE = os.path.join(BASE_DIR, "app-compat-test.json")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 GCP_STORAGE_BUCKET = os.getenv("GCP_STORAGE_BUCKET")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
