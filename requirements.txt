@@ -9,3 +9,5 @@ requests==2.31.0
 google-cloud-storage
 psycopg2-binary
 django-filter
+pillow
+imagehash

@@ -16,7 +16,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-print("BASE_DIR=====", BASE_DIR)
+
 load_dotenv()
 # TODO: move the credentials file in production
 GCP_CREDENTIALS_FILE = f"{BASE_DIR}/app-compat-test.json"
@@ -33,7 +33,11 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1:8000"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "ec2-18-189-184-35.us-east-2.compute.amazonaws.com",
+]
 
 # Application definition
 

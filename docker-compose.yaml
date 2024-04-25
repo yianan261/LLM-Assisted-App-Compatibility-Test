@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  llm-app-compat:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    container_name: api_c
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app/backend
+    environment:
+      - GOOGLE_API_KEY=AIzaSyCjYuo9vQBnCiynI7Fo2J-cFUSQUQMmQmA
+      - GCP_STORAGE_BUCKET=issues_phone_test_results
+      - SECRET_KEY=django-insecure-r8ms^xmpz*%%%=j9-b%$w_!9bou2c2s#qwz$ct3$dajs%0v&=u
+      - DB_PASSWORD=Vzt8BypIJ02u1A3Bm8oF
+    depends_on:
+      - db
+  db:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=app_db
+      - POSTGRES_USER=appcompat
+      - POSTGRES_PASSWORD=Vzt8BypIJ02u1A3Bm8oF
+volumes:
+  postgres_data:
