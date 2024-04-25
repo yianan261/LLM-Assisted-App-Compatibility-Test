@@ -37,7 +37,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: chenyian261/llm-app:latest
+          tags: chenyian261/llm-app-compat:latest
           platforms: linux/amd64, linux/arm64
 
       # not needed

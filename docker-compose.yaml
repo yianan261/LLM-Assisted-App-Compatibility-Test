@@ -8,11 +8,8 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app/backend
-    environment:
-      - GOOGLE_API_KEY=AIzaSyCjYuo9vQBnCiynI7Fo2J-cFUSQUQMmQmA
-      - GCP_STORAGE_BUCKET=issues_phone_test_results
-      - SECRET_KEY=django-insecure-r8ms^xmpz*%%%=j9-b%$w_!9bou2c2s#qwz$ct3$dajs%0v&=u
-      - DB_PASSWORD=Vzt8BypIJ02u1A3Bm8oF
+    env_file:
+      - .env
     depends_on:
       - db
   db:
