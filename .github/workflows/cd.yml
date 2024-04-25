@@ -10,24 +10,45 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out the repository
-      uses: actions/checkout@v4
+      - name: Check out the repository
+        uses: actions/checkout@v4
 
-    - name: Build and push Docker image
-      run: |
-        docker build -t chenyian261/llm-app-compat:latest .
-        echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login --username chenyian261 --password-stdin
-        docker push chenyian261/llm-app-compat:latest
+      - name: Decode GCP Credentials
+        env:
+          GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+        run: |
+          echo "$GCP_CREDENTIALS" | base64 -d > "$HOME/app-compat-test.json"
 
-    - name: SSH and Deploy
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
-        port: ${{ secrets.PORT }}
-        script: |
-          docker pull chenyian261/llm-app-compat:latest
-          docker stop django_app || true
-          docker rm django_app || true
-          docker run -d --name django_app -p 80:8000 chenyian261/llm-app-compat:latest
+      - name: Move GCP Credentials into Workspace
+        run: mv "$HOME/app-compat-test.json" "${{ github.workspace }}"
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t chenyian261/llm-app:latest .
+          echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login --username chenyian261 --password-stdin
+          docker push chenyian261/llm-app:latest
+
+        # - name: Build and push Docker image on EC2
+        #   uses: appleboy/ssh-action@master
+        #   with:
+        #     host: ${{ secrets.HOST }}
+        #     username: ${{ secrets.USERNAME }}
+        #     key: ${{ secrets.SSH_KEY }}
+        #     port: ${{ secrets.PORT }}
+        #     script: |
+        #       docker build -t chenyian261/llm-app-compat:latest .
+        #       echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login --username chenyian261 --password-stdin
+        #       docker push chenyian261/llm-app-compat:latest
+
+    # - name: SSH and Deploy
+    #   uses: appleboy/ssh-action@master
+    #   with:
+    #     host: ${{ secrets.HOST }}
+    #     username: ${{ secrets.USERNAME }}
+    #     key: ${{ secrets.SSH_KEY }}
+    #     port: ${{ secrets.PORT }}
+    #     script: |
+    #       docker pull chenyian261/llm-app-compat:latest
+    #       docker stop django_app || true
+    #       docker rm django_app || true
+    #       docker run -d --name django_app -p 80:8000 chenyian261/llm-app-compat:latest
