@@ -16,6 +16,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+print("BASE_DIR=====", BASE_DIR)
 load_dotenv()
 # TODO: move the credentials file in production
 GCP_CREDENTIALS_FILE = f"{BASE_DIR}/app-compat-test.json"
@@ -30,9 +31,9 @@ DB_PASSWORD = os.getenv("DB_PASSWORD")
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1:8000"]
 
 # Application definition
 
@@ -96,13 +97,22 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "app_db",
-        "USER": "postgres",
+        "USER": "appcompat",
         "PASSWORD": DB_PASSWORD,
-        "HOST": "localhost",
-        "PORT": "",
+        "HOST": "app-compat-test-db.cr62ig2gse91.us-east-2.rds.amazonaws.com",
+        "PORT": "5432",
     }
 }
-
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "app_db",
+#         "USER": "postgres",
+#         "PASSWORD": DB_PASSWORD,
+#         "HOST": "localhost",
+#         "PORT": "",
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
