@@ -28,6 +28,6 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           docker pull chenyian261/llm-app-compat:latest
-          docker stop my_app_container || true
-          docker rm my_app_container || true
-          docker run -d --name my_app_container -p 80:8000 chenyian261/llm-app-compat:latest
+          docker stop django_app || true
+          docker rm django_app || true
+          docker run -d --name django_app -p 80:8000 chenyian261/llm-app-compat:latest

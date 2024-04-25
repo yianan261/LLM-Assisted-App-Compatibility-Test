@@ -19,7 +19,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 load_dotenv()
 # TODO: move the credentials file in production
-GCP_CREDENTIALS_FILE = f"{BASE_DIR}/app-compat-test.json"
+file = f"{BASE_DIR}/app-compat-test.json"
+GCP_CREDENTIALS = os.getenv('GCP_CREDENTIALS_FILE')
+print("GCP CREDENTIALS",GCP_CREDENTIALS)
+GCP_CREDENTIALS_FILE = file if file else GCP_CREDENTIALS
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 GCP_STORAGE_BUCKET = os.getenv("GCP_STORAGE_BUCKET")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
