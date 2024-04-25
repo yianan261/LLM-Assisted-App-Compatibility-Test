@@ -22,23 +22,42 @@ jobs:
       - name: Move GCP Credentials into Workspace
         run: mv "$HOME/app-compat-test.json" "${{ github.workspace }}"
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build and push Docker image
-        run: |
-          docker build -t chenyian261/llm-app:latest .
-          echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login --username chenyian261 --password-stdin
-          docker push chenyian261/llm-app:latest
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: chenyian261/llm-app:latest
+          platforms: linux/amd64, linux/arm64
 
-        # - name: Build and push Docker image on EC2
-        #   uses: appleboy/ssh-action@master
-        #   with:
-        #     host: ${{ secrets.HOST }}
-        #     username: ${{ secrets.USERNAME }}
-        #     key: ${{ secrets.SSH_KEY }}
-        #     port: ${{ secrets.PORT }}
-        #     script: |
-        #       docker build -t chenyian261/llm-app-compat:latest .
-        #       echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login --username chenyian261 --password-stdin
-        #       docker push chenyian261/llm-app-compat:latest
+      # not needed
+      # - name: Build and push Docker image
+      #   run: |
+      #     docker build -t chenyian261/llm-app:latest .
+      #     echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login --username chenyian261 --password-stdin
+      #     docker push chenyian261/llm-app:latest
+
+      # - name: Build and push Docker image on EC2
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     key: ${{ secrets.SSH_KEY }}
+      #     port: ${{ secrets.PORT }}
+      #     script: |
+      #       docker build -t chenyian261/llm-app-compat:latest .
+      #       echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login --username chenyian261 --password-stdin
+      #       docker push chenyian261/llm-app-compat:latest
 
     # - name: SSH and Deploy
     #   uses: appleboy/ssh-action@master
