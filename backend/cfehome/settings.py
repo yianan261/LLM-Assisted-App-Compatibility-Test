@@ -36,6 +36,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "ec2-18-189-184-35.us-east-2.compute.amazonaws.com",
+    "llm-app-balancer-327500741.us-east-2.elb.amazonaws.com",
 ]
 
 # Application definition
