@@ -47,7 +47,7 @@ jobs:
           aws-region: "us-east-2"
       - name: Force new deployment of ECS Service
         run: |
-          aws ecs update-service --cluster llm-app-cluster2 --service llm-app-service --force-new-deployment
+          aws ecs update-service --cluster llm-app-cluster2 --service llm-app-service2 --force-new-deployment
 
       # - name: Deploy to Amazon ECS
       #   uses: aws-actions/amazon-ecs-deploy@v1
