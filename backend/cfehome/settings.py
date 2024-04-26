@@ -38,6 +38,7 @@ ALLOWED_HOSTS = [
     "ec2-18-189-184-35.us-east-2.compute.amazonaws.com",
     "llm-app-balancer-327500741.us-east-2.elb.amazonaws.com",
     "*",
+    "172.31.4.139",
 ]
 
 # Application definition
