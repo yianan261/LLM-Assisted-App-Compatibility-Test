@@ -4,3 +4,4 @@ myenv/
 __pycache__/
 app-compat-test.json
 node_modules/
+backend/app-compat-test.json

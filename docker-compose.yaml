@@ -9,7 +9,7 @@ services:
     volumes:
       - ./backend:/app/backend
     env_file:
-      - .env
+      - ./backend/.env
     depends_on:
       - db
   db:
