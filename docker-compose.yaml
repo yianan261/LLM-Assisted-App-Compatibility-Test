@@ -2,7 +2,7 @@ version: "3.8"
 services:
   llm-app-compat:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn cfehome.wsgi:application --bind 0.0.0.0:8000 --workers 4
     container_name: api_c
     ports:
       - "8000:8000"
@@ -19,6 +19,6 @@ services:
     environment:
       - POSTGRES_DB=app_db
       - POSTGRES_USER=appcompat
-      - POSTGRES_PASSWORD=Vzt8BypIJ02u1A3Bm8oF
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
 volumes:
   postgres_data:
