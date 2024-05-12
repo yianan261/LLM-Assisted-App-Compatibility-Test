@@ -33,7 +33,7 @@ jobs:
           python manage.py test
 
   build-and-deploy:
-    needs: tests
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
