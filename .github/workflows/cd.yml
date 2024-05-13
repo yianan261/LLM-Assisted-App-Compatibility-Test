@@ -51,10 +51,6 @@ jobs:
           echo "$GCP_CREDENTIALS" | base64 -d > "$HOME/app-compat-test.json"
       - name: Move GCP Credentials into Workspace
         run: mv "$HOME/app-compat-test.json" "${{ github.workspace }}"
-      - name: Verify settings import
-        run: |
-          cd backend
-          python -c "from cfehome import settings_ci; print('Successfully imported settings_ci')"
       - name: Test Django unit tests
         run: |
           export DJANGO_SETTINGS_MODULE=cfehome.settings_ci
