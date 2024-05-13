@@ -23,11 +23,13 @@ jobs:
           pip install -r requirements.txt
       - name: Test Django unit test
         env:
-          DATABASE_HOST: ${{ secrets.DB_HOST }}
-          DATABASE_USER: ${{ secrets.DB_USER }}
-          DATABASE_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DATABASE_NAME: ${{ secrets.DB_NAME }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
         run: |
+          echo "Database Host: $DB_HOST"
+          echo "Database Name: $DB_NAME"
           cd backend
           python manage.py test
 
@@ -71,7 +73,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: "us-east-2"
-      - name: Force new deployment of ECS Service
+      - name: New deployment of ECS Service
         run: |
           aws ecs update-service --cluster llm-app-cluster2 --service llm-app-service2 --force-new-deployment
 
