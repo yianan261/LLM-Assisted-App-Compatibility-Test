@@ -9,6 +9,7 @@ from unittest.mock import patch, Mock
 from django.test import TestCase
 import datetime
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -16,12 +17,9 @@ logger = logging.getLogger(__name__)
 class ImageProcessingAPITests(APITestCase):
     def setUp(self):
         self.url = reverse("process_image")
-        self.image_file1 = open(
-            "/Users/chenyian261/Documents/GitHub/CS6510Project/backend/test.png", "rb"
-        )
-        self.image_file2 = open(
-            "/Users/chenyian261/Documents/GitHub/CS6510Project/backend/test3.png", "rb"
-        )
+        self.base = os.path.abspath(os.path.dirname(__file__))
+        self.image_file1 = open(f"{self.base}/test.png", "rb")
+        self.image_file2 = open(f"{self.base}/test3.png", "rb")
 
     def tearDown(self):
         self.image_file1.close()
@@ -116,6 +114,7 @@ class ScreenshotListAPIViewTestCase(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 0)
+
 
 # class ScreenshotTestCase(TestCase):
 
