@@ -29,14 +29,19 @@ jobs:
 
       - name: Move GCP Credentials into Workspace
         run: mv "$HOME/app-compat-test.json" "${{ github.workspace }}"
-
-      - name: Test Django unit test
-        env:
-          DJANGO_SETTINGS_MODULE: cfehome.settings.settings_ci
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      - name: Verify settings import
         run: |
           cd backend
+          python -c "from cfehome import settings_ci; print('Successfully imported settings_ci')"
+
+      - name: Test Django unit test
+        run: |
+          export DJANGO_SETTINGS_MODULE=cfehome.settings_ci
+          echo "Using settings: $DJANGO_SETTINGS_MODULE"
+          cd backend
           python manage.py test
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
 
   build-and-deploy:
     needs: test
