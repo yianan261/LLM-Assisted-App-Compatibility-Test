@@ -13,6 +13,11 @@ jobs:
   test:
     name: Test and lint
     runs-on: ubuntu-latest
+    env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      ALLOWED_HOSTS: "localhost,127.0.0.1"
+      DATABASE_URL: "sqlite://:memory:"
+      CORS_ORIGIN_WHITELIST: "http://localhost,http://127.0.0.1"
     steps:
       - name: Check out the repository
         uses: actions/checkout@v4
@@ -38,11 +43,6 @@ jobs:
           python -c "from cfehome import settings_ci; print('Successfully imported settings_ci')"
 
       - name: Test Django unit test
-        env:
-        SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        ALLOWED_HOSTS: "localhost,127.0.0.1"
-        DATABASE_URL: "sqlite://:memory:"
-        CORS_ORIGIN_WHITELIST: "http://localhost,http://127.0.0.1"
         run: |
           export DJANGO_SETTINGS_MODULE=cfehome.settings_ci
           echo "Using settings: $DJANGO_SETTINGS_MODULE"
