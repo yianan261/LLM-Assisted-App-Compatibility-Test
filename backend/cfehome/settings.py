@@ -23,8 +23,9 @@ GCP_CREDENTIALS_FILE = os.path.join(BASE_DIR, "app-compat-test.json")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 GCP_STORAGE_BUCKET = os.getenv("GCP_STORAGE_BUCKET")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_NAME = os.getenv("DB_NAME", "app_db")
+DB_NAME = os.getenv("DB_NAME")
 DB_HOST = os.getenv("DB_HOST")
+DB_USER = os.getenv("DB_USER")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -105,7 +106,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": DB_NAME,
-        "USER": "appcompat",
+        "USER": DB_USER,
         "PASSWORD": DB_PASSWORD,
         "HOST": DB_HOST,
         "PORT": "5432",
