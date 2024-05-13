@@ -56,7 +56,7 @@ jobs:
       - name: Print database settings
         run: |
           cd backend
-          python -c "from django.conf import settings; print(settings.DATABASES)"
+          python -c "from django.conf import settings_ci; print(settings_ci.DATABASES)"
       - name: Test Django unit tests
         run: |
           export DJANGO_SETTINGS_MODULE=cfehome.settings_ci
