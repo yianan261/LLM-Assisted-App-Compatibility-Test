@@ -23,7 +23,8 @@ GCP_CREDENTIALS_FILE = os.path.join(BASE_DIR, "app-compat-test.json")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 GCP_STORAGE_BUCKET = os.getenv("GCP_STORAGE_BUCKET")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
-
+DB_NAME = os.getenv("DB_NAME", "app_db")
+DB_HOST = os.getenv("DB_HOST")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -103,10 +104,10 @@ WSGI_APPLICATION = "cfehome.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "app_db",
+        "NAME": DB_NAME,
         "USER": "appcompat",
         "PASSWORD": DB_PASSWORD,
-        "HOST": "app-compat-test-db.cr62ig2gse91.us-east-2.rds.amazonaws.com",
+        "HOST": DB_HOST,
         "PORT": "5432",
     }
 }
