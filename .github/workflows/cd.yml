@@ -20,6 +20,7 @@ jobs:
           POSTGRES_DB: testdb
           POSTGRES_USER: testuser
           POSTGRES_PASSWORD: testpassword
+          POSTGRES_HOST: postgres
         ports:
           - 5432:5432
         options: >-
@@ -55,6 +56,9 @@ jobs:
         run: mv "$HOME/app-compat-test.json" "${{ github.workspace }}"
       - name: Print PYTHONPATH
         run: echo $PYTHONPATH
+      - name: Check PostgreSQL connection
+        run: |
+          pg_isready -h postgres -p 5432
       - name: Test Django unit tests
         run: |
           export PYTHONPATH=$PYTHONPATH:$(pwd)/backend
