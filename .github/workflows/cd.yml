@@ -30,12 +30,8 @@ jobs:
           --health-retries 5
     env:
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
+
     steps:
-      - name: Test database connection
-        run: |
-          sudo apt-get install -y postgresql-client
-          # Test psql connection
-          PGPASSWORD=testpassword psql -h postgres -p 5432 -U testuser -d testdb -c "select 1"
       - name: Check out the repository
         uses: actions/checkout@v4
       - name: Set up Python 3.10
@@ -55,6 +51,8 @@ jobs:
         run: mv "$HOME/app-compat-test.json" "${{ github.workspace }}"
       - name: Print PYTHONPATH
         run: echo $PYTHONPATH
+      - name: Install PostgreSQL client
+        run: sudo apt-get install -y postgresql-client
       - name: Wait for PostgreSQL to initialize
         run: sleep 10
       - name: Ensure PostgreSQL is ready
@@ -65,11 +63,8 @@ jobs:
             sleep 5
           done
       - name: Test database connection
-      run: |
-        # for psql
-        sudo apt-get install -y postgresql-client
-        # Test psql connection
-        PGPASSWORD=testpassword psql -h postgres -p 5432 -U postuser -d postdb -c "select 1"
+        run: |
+          PGPASSWORD=testpassword psql -h postgres -p 5432 -U testuser -d testdb -c "select 1"
       - name: Check PostgreSQL connection
         run: |
           pg_isready -h postgres -p 5432
@@ -80,7 +75,6 @@ jobs:
           echo "Using settings: $DJANGO_SETTINGS_MODULE"
           cd backend
           python manage.py test
-
 
   build-and-deploy:
     needs: test
