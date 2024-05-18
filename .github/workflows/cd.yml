@@ -26,7 +26,7 @@ jobs:
         options: >-
           --health-cmd "pg_isready -U testuser -d testdb"
           --health-interval 10s
-          --health-timeout 10s
+          --health-timeout 5s
           --health-retries 5
     env:
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
@@ -62,12 +62,12 @@ jobs:
             echo "Waiting for Postgres to be ready..."
             sleep 5
           done
-      - name: Test database connection
-        run: |
-          PGPASSWORD=testpassword psql -h postgres -p 5432 -U testuser -d testdb -c "select 1"
       - name: Check PostgreSQL connection
         run: |
           pg_isready -h postgres -p 5432
+      - name: Get PostgreSQL Logs
+        if: failure() # Ensures this only runs if the preceding steps fail
+        run: docker logs postgres
       - name: Test Django unit tests
         run: |
           export PYTHONPATH=$PYTHONPATH:$(pwd)/backend
