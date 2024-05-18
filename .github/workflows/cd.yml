@@ -63,8 +63,11 @@ jobs:
           echo "Using settings: $DJANGO_SETTINGS_MODULE"
           cd backend
           python -c "import settings_ci; print(settings_ci.DATABASES)"
+      - name: Print PYTHONPATH
+        run: echo $PYTHONPATH
       - name: Test Django unit tests
-        run: |
+        run:|
+          export PYTHONPATH=$PYTHONPATH:$(pwd)/backend
           export DJANGO_SETTINGS_MODULE=cfehome.settings_ci
           echo "Using settings: $DJANGO_SETTINGS_MODULE"
           cd backend
