@@ -56,6 +56,9 @@ jobs:
         run: mv "$HOME/app-compat-test.json" "${{ github.workspace }}"
       - name: Print PYTHONPATH
         run: echo $PYTHONPATH
+      - name: Get PostgreSQL logs
+        if: failure()
+        run: docker logs postgres
       - name: Check PostgreSQL connection
         run: |
           pg_isready -h postgres -p 5432
