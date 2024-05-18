@@ -75,6 +75,9 @@ jobs:
           echo "Using settings: $DJANGO_SETTINGS_MODULE"
           cd backend
           python manage.py test
+        env:
+          POSTGRES_HOST: postgres
+          POSTGRES_PORT: 5432
 
   build-and-deploy:
     needs: test
