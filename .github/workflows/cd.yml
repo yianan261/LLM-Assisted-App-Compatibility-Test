@@ -28,7 +28,6 @@ jobs:
           --health-interval 10s
           --health-timeout 10s
           --health-retries 5
-
     env:
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
       POSTGRES_HOST: postgres
@@ -37,6 +36,12 @@ jobs:
       POSTGRES_USER: testuser
       POSTGRES_PASSWORD: testpassword
     steps:
+      - name: Test database connection
+        run: |
+          # for psql
+          sudo apt-get install -y postgresql-client
+          # Test psql connection
+          PGPASSWORD=mysecretpassword psql -h localhost -p 5432 -U testuser -d testdb -c "select 1"
       - name: Check out the repository
         uses: actions/checkout@v4
       - name: Set up Python 3.10
@@ -65,6 +70,12 @@ jobs:
             echo "Waiting for Postgres to be ready..."
             sleep 5
           done
+      - name: Test database connection
+      run: |
+        # for psql
+        sudo apt-get install -y postgresql-client
+        # Test psql connection
+        PGPASSWORD=testpassword psql -h postgres -p 5432 -U postuser -d postdb -c "select 1"
       - name: Check PostgreSQL connection
         run: |
           pg_isready -h postgres -p 5432
@@ -75,9 +86,7 @@ jobs:
           echo "Using settings: $DJANGO_SETTINGS_MODULE"
           cd backend
           python manage.py test
-        env:
-          POSTGRES_HOST: postgres
-          POSTGRES_PORT: 5432
+
 
   build-and-deploy:
     needs: test
