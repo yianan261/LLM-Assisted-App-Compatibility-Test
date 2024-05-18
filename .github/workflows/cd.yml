@@ -30,18 +30,13 @@ jobs:
           --health-retries 5
     env:
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
-      POSTGRES_DB: testdb
-      POSTGRES_USER: testuser
-      POSTGRES_PASSWORD: testpassword
     steps:
       - name: Test database connection
         run: |
           # for psql
           sudo apt-get install -y postgresql-client
           # Test psql connection
-          PGPASSWORD=mysecretpassword psql -h localhost -p 5432 -U testuser -d testdb -c "select 1"
+          PGPASSWORD=testpassword psql -h postgres -p 5432 -U testuser -d testdb -c "select 1"
       - name: Check out the repository
         uses: actions/checkout@v4
       - name: Set up Python 3.10
