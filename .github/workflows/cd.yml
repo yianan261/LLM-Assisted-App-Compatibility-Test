@@ -33,7 +33,6 @@ jobs:
     steps:
       - name: Test database connection
         run: |
-          # for psql
           sudo apt-get install -y postgresql-client
           # Test psql connection
           PGPASSWORD=testpassword psql -h postgres -p 5432 -U testuser -d testdb -c "select 1"
