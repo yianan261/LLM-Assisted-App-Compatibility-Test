@@ -7,7 +7,7 @@ DATABASES = {
         "NAME": os.getenv("POSTGRES_DB", "testdb"),
         "USER": os.getenv("POSTGRES_USER", "testuser"),
         "PASSWORD": os.getenv("POSTGRES_PASSWORD", "testpassword"),
-        "HOST": os.getenv("POSTGRES_HOST", "postgres"),
+        "HOST": os.getenv("POSTGRES_HOST", "localhost"),
         "PORT": os.getenv("POSTGRES_PORT", "5432"),
     }
 }
