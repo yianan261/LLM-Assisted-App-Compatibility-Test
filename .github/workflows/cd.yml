@@ -58,6 +58,8 @@ jobs:
         run: ls -l ${{ github.workspace }}
       - name: List backend directory
         run: ls -l ${{ github.workspace }}/backend
+      - name: Display JSON file contents
+        run: cat ${{ github.workspace }}/backend/app-compat-test.json
       - name: Print PYTHONPATH
         run: echo $PYTHONPATH
       - name: Install PostgreSQL client
