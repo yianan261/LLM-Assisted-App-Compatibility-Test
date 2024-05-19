@@ -81,7 +81,7 @@ jobs:
       - name: Change back to root directory
         run: cd ..
       - name: list files in workspace
-        run: ls -la
+        run: ls -l /home/runner/work/LLM-Assisted-App-Compatibility-Test/LLM-Assisted-App-Compatibility-Test
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
