@@ -14,12 +14,16 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 from .get_secrets import get_secret
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv()
 GCP_CREDENTIALS_FILE = os.path.join(BASE_DIR, "app-compat-test.json")
+with open(f"{BASE_DIR}/app-compat-test.json", "r") as f:
+    data = json.load(f)
+print("PRINTING DATA=====", data)
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 GCP_STORAGE_BUCKET = os.getenv("GCP_STORAGE_BUCKET")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
