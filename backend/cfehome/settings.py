@@ -21,9 +21,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv()
 GCP_CREDENTIALS_FILE = os.path.join(BASE_DIR, "app-compat-test.json")
-with open(f"{BASE_DIR}/app-compat-test.json", "r") as f:
-    data = json.load(f)
-print("PRINTING DATA=====", data)
+# =====debugging======
+json_file_path = os.path.join(BASE_DIR, "app-compat-test.json")
+print("Checking JSON file at:", json_file_path)  # Debugging output
+if os.path.exists(json_file_path):
+    with open(json_file_path, "r") as f:
+        data = json.load(f)
+    print("PRINTING DATA=====", data)  # Confirm content is loaded
+else:
+    print("JSON file not found at expected path!")
+# =====debugging======
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 GCP_STORAGE_BUCKET = os.getenv("GCP_STORAGE_BUCKET")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
