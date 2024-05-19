@@ -49,7 +49,7 @@ jobs:
         env:
           GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
         run: |
-          echo "$GCP_CREDENTIALS" | base64 -d > "$HOME/app-compat-test.json"
+          echo "$GCP_CREDENTIALS" | base64 -d > "$HOME/backend/app-compat-test.json"
       - name: Move GCP Credentials into Workspace
         run: |
           mkdir -p ${{ github.workspace }}/backend
@@ -59,7 +59,11 @@ jobs:
       - name: List backend directory
         run: ls -l ${{ github.workspace }}/backend
       - name: Display JSON file contents
-        run: cat ${{ github.workspace }}/backend/app-compat-test.json
+        run: |
+          echo "Checking file size..."
+          ls -l ${{ github.workspace }}/backend/app-compat-test.json
+          echo "Displaying file contents..."
+          cat ${{ github.workspace }}/backend/app-compat-test.json
       - name: Print PYTHONPATH
         run: echo $PYTHONPATH
       - name: Install PostgreSQL client
