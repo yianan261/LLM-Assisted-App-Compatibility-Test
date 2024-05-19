@@ -56,6 +56,8 @@ jobs:
           echo "$GCP_CREDENTIALS" | base64 -d > ${{ github.workspace }}/backend/app-compat-test.json
       - name: List files in workspace
         run: ls -l ${{ github.workspace }}
+      - name: List backend directory
+        run: ls -l ${{ github.workspace }}/backend
       - name: Print PYTHONPATH
         run: echo $PYTHONPATH
       - name: Install PostgreSQL client
