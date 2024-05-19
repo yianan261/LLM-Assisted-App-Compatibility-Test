@@ -61,6 +61,8 @@ jobs:
           ls -l ${{ github.workspace }}/backend/app-compat-test.json
           echo "Displaying file contents..."
           cat ${{ github.workspace }}/backend/app-compat-test.json
+      - name: Set Google Application Credentials
+        run: echo "GOOGLE_APPLICATION_CREDENTIALS=${{ github.workspace }}/backend/app-compat-test.json" >> $GITHUB_ENV
       - name: Print PYTHONPATH
         run: echo $PYTHONPATH
       - name: Install PostgreSQL client

@@ -15,7 +15,7 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 COPY /backend ./backend
 
 # Copy the GCP credentials file into the container
-COPY app-compat-test.json ./backend/
+COPY /backend/app-compat-test.json ./backend/
 
 WORKDIR /app/backend
 
