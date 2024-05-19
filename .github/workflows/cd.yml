@@ -51,7 +51,9 @@ jobs:
         run: |
           echo "$GCP_CREDENTIALS" | base64 -d > "$HOME/app-compat-test.json"
       - name: Move GCP Credentials into Workspace
-        run: mv "$HOME/backend/app-compat-test.json" "${{ github.workspace }}"
+        run: |
+          mkdir -p ${{ github.workspace }}/backend
+          echo "$GCP_CREDENTIALS" | base64 -d > ${{ github.workspace }}/backend/app-compat-test.json
       - name: List files in workspace
         run: ls -l ${{ github.workspace }}
       - name: Print PYTHONPATH

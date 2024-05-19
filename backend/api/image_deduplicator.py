@@ -3,7 +3,9 @@ import imagehash
 from .models import Screenshot
 from .serializers import ScreenshotSerializer
 import logging
+
 logger = logging.getLogger("basic")
+
 
 def deduplicate_image(images):
     unique_images = []
@@ -32,7 +34,5 @@ def deduplicate_image(images):
                 db_images.extend(serialized)
 
         except Exception as e:
-            logger.error(
-                f"Error processing image: {image_file.name}. Error: {str(e)}"
-            )
+            logger.error(f"Error processing image: {image_file.name}. Error: {str(e)}")
     return unique_images, db_images
