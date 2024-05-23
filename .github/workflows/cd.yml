@@ -102,12 +102,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Display Dockerfile
         run: cat Dockerfile
-      - name: list files in backend and current directories
-        run: |
-          cd backend
-          ls
-          cd ..
-          ls
+      - name: list files in current directories
+        run: ls
       - name: list current directory path
         run: pwd
       - name: Build and push Docker image
