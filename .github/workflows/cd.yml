@@ -98,7 +98,7 @@ jobs:
       - name: Display Dockerfile
         run: cat Dockerfile
       - name: Build and push Docker image
-        working-directory: $GITHUB_WORKSPACE
+        # working-directory: $GITHUB_WORKSPACE
         uses: docker/build-push-action@v5
         with:
           context: .
