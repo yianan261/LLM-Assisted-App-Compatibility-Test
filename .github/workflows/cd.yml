@@ -83,7 +83,7 @@ jobs:
 
     steps:
       - name: list files in workspace
-        run: ls -l $GITHUB_WORKSPACE
+        run: ls
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
