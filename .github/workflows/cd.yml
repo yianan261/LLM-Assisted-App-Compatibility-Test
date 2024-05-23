@@ -65,6 +65,10 @@ jobs:
       - name: Test PostgreSQL connection
         run: |
           PGPASSWORD=testpassword psql -h localhost -p 5432 -U testuser -d testdb -c "SELECT 1"
+      - name: list current directory path and files in workspace
+        run: |
+          pwd
+          ls
       - name: Test Django unit tests
         run: |
           export PYTHONPATH=$PYTHONPATH:$(pwd)/backend
@@ -72,14 +76,13 @@ jobs:
           echo "Using settings: $DJANGO_SETTINGS_MODULE"
           cd backend
           python manage.py test
+          cd ..
 
   build-and-deploy:
     needs: test
     runs-on: ubuntu-latest
 
     steps:
-      - name: Change back to root directory
-        run: cd ..
       - name: list files in workspace
         run: ls -l /home/runner/work/LLM-Assisted-App-Compatibility-Test/LLM-Assisted-App-Compatibility-Test
       - name: Set up QEMU
@@ -96,6 +99,7 @@ jobs:
       - name: Display Dockerfile
         run: cat Dockerfile
       - name: Build and push Docker image
+        working-directory: /home/runner/work/LLM-Assisted-App-Compatibility-Test/LLM-Assisted-App-Compatibility-Test
         uses: docker/build-push-action@v5
         with:
           context: .
